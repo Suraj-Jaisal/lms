@@ -20,10 +20,12 @@ const NavbarRoutes = () => {
         </Button>
       ) : (
         <Link href="/teacher/courses">
-          <Button>Teacher Mode</Button>
+          <Button size="sm" variant="ghost">
+            Teacher Mode
+          </Button>
         </Link>
       )}
-      <UserButton />
+      <UserButton afterSignOutUrl="/" />
     </div>
   );
 };
