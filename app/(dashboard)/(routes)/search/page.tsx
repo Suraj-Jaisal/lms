@@ -1,5 +1,37 @@
-const Search = () => {
-  return <div>Search</div>;
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
+
+import { db } from "@/lib/db";
+
+import { Categories } from "./_components/categories";
+
+interface SearchPageProps {
+  searchParams: {
+    title: string;
+    categoryId: string;
+  };
+}
+
+const SearchPage = async ({ searchParams }: SearchPageProps) => {
+  const { userId } = auth();
+
+  if (!userId) {
+    return redirect("/");
+  }
+
+  const categories = await db.category.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
+
+  return (
+    <>
+      <div className="p-6 space-y-4">
+        <Categories items={categories} />
+      </div>
+    </>
+  );
 };
 
-export default Search;
+export default SearchPage;
